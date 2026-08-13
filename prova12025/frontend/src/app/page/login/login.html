@@ -1,1 +1,15 @@
-<p>login works!</p>
+<div class="login-card">
+    <h3>Sistema de Almoxarifado</h3>
+    <!-- ngSubmit é uma função q permite rodar um metodo ao enviar o formulario -->
+    <form (ngSubmit)="entrar()" #loginForm="ngForm">
+        <!-- ngForm associa elementos do formulario a atributos do typescript -->
+         <label for="">Login</label>
+         <input type="text" name="login" [(ngModel)]="credencial.login" required>
+         <!-- ng model -> bind do valor do input-->
+          <br>
+          <label for="senha">Senha</label>
+          <input type="password" name="senha" [(ngModel)]="credencial.senha" required>
+          <br>
+          <button type="submit" [disable]="loginForm.invalid">Entrar</button>
+    </form>
+</div>
