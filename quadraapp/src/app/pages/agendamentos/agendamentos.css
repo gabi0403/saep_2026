@@ -1,0 +1,180 @@
+.agendamentos-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.topbar {
+  height: 65px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1976d2;
+  color: white;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.topbar nav {
+  display: flex;
+  gap: 25px;
+}
+
+.topbar nav a {
+  color: white;
+  text-decoration: none;
+}
+
+.topbar nav a:hover {
+  text-decoration: underline;
+}
+
+.conteudo {
+  padding: 35px 40px;
+}
+
+.cabecalho h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.cabecalho p {
+  color: #666;
+  margin-top: 5px;
+}
+
+
+/* FORMULÁRIO */
+
+.formulario {
+  margin-top: 30px;
+  padding: 25px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.formulario h2 {
+  margin-top: 0;
+}
+
+.campos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.campo label {
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.campo input,
+.campo select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+  background-color: white;
+}
+
+.campo input:focus,
+.campo select:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.botao {
+  margin-top: 20px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1976d2;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background-color: #125ca1;
+}
+
+.erro {
+  color: #d32f2f;
+  margin-top: 15px;
+}
+
+
+/* LISTA */
+
+.lista {
+  margin-top: 30px;
+}
+
+.lista-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lista-header h2 {
+  font-size: 20px;
+}
+
+.lista-header span {
+  color: #666;
+}
+
+.tabela-container {
+  margin-top: 15px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background-color: #f8f8f8;
+}
+
+.excluir {
+  padding: 7px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #d32f2f;
+  color: white;
+  cursor: pointer;
+}
+
+.excluir:hover {
+  background-color: #b71c1c;
+}
+
+.vazio {
+  margin-top: 15px;
+  padding: 25px;
+  background-color: white;
+  border-radius: 8px;
+  color: #666;
+  text-align: center;
+}

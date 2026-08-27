@@ -1,0 +1,43 @@
+<div class="login-container">
+
+  <h1>QuadraApp</h1>
+
+  <h2>Login</h2>
+
+  <form (ngSubmit)="entrar()">
+
+    <div>
+      <label for="usuario">Usuário</label>
+
+      <input
+        id="usuario"
+        type="text"
+        name="usuario"
+        [(ngModel)]="usuario"
+        placeholder="Digite seu usuário"
+      >
+    </div>
+
+    <div>
+      <label for="senha">Senha</label>
+
+      <input
+        id="senha"
+        type="password"
+        name="senha"
+        [(ngModel)]="senha"
+        placeholder="Digite sua senha"
+      >
+    </div>
+
+    @if (mensagemErro) {
+      <p class="erro">{{ mensagemErro }}</p>
+    }
+
+    <button type="submit">
+      Entrar
+    </button>
+
+  </form>
+
+</div>

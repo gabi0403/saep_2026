@@ -1,0 +1,94 @@
+<div class="dashboard">
+
+  <header class="topbar">
+
+    <div class="logo">
+      <h1>QuadraApp</h1>
+    </div>
+
+    <nav>
+      <a routerLink="/dashboard">Dashboard</a>
+      <a routerLink="/clientes">Clientes</a>
+      <a routerLink="/agendamentos">Agendamentos</a>
+      <a routerLink="/login">Sair</a>
+    </nav>
+
+  </header>
+
+
+  <main class="conteudo">
+
+    <div class="cabecalho">
+      <div>
+        <h2>Dashboard</h2>
+        <p>Visão geral do sistema</p>
+      </div>
+    </div>
+
+
+    <section class="cards">
+
+      <div class="card">
+
+        <div>
+          <p>Total de Clientes</p>
+          <h3>{{ totalClientes }}</h3>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div>
+          <p>Total de Quadras</p>
+          <h3>{{ totalQuadras }}</h3>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div>
+          <p>Agendamentos Hoje</p>
+          <h3>{{ agendamentosHoje }}</h3>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="acoes">
+
+      <h2>Acesso rápido</h2>
+
+      <div class="botoes">
+
+        <a routerLink="/clientes" class="botao">
+          Gerenciar Clientes
+        </a>
+
+        <a routerLink="/agendamentos" class="botao">
+          Novo Agendamento
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <section class="proximos">
+
+      <h2>Próximos Agendamentos</h2>
+
+      <div class="vazio">
+        <p>Nenhum agendamento cadastrado.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

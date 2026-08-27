@@ -1,0 +1,205 @@
+<div class="agendamentos-page">
+
+  <header class="topbar">
+
+    <h1>QuadraApp</h1>
+
+    <nav>
+      <a routerLink="/dashboard">Dashboard</a>
+      <a routerLink="/clientes">Clientes</a>
+      <a routerLink="/agendamentos">Agendamentos</a>
+      <a routerLink="/login">Sair</a>
+    </nav>
+
+  </header>
+
+
+  <main class="conteudo">
+
+    <div class="cabecalho">
+
+      <div>
+        <h2>Agendamentos</h2>
+        <p>Gerenciamento de reservas das quadras</p>
+      </div>
+
+    </div>
+
+
+    <!-- FORMULÁRIO -->
+
+    <section class="formulario">
+
+      <h2>Novo Agendamento</h2>
+
+      <form (ngSubmit)="adicionarAgendamento()">
+
+        <div class="campos">
+
+          <div class="campo">
+
+            <label for="cliente">Cliente</label>
+
+            <input
+              type="text"
+              id="cliente"
+              name="cliente"
+              [(ngModel)]="cliente"
+              placeholder="Nome do cliente"
+            >
+
+          </div>
+
+
+          <div class="campo">
+
+            <label for="quadra">Quadra</label>
+
+            <select
+              id="quadra"
+              name="quadra"
+              [(ngModel)]="quadra"
+            >
+
+              <option value="">Selecione uma quadra</option>
+
+              @for (q of quadras; track q) {
+                <option [value]="q">
+                  {{ q }}
+                </option>
+              }
+
+            </select>
+
+          </div>
+
+
+          <div class="campo">
+
+            <label for="data">Data</label>
+
+            <input
+              type="date"
+              id="data"
+              name="data"
+              [(ngModel)]="data"
+            >
+
+          </div>
+
+
+          <div class="campo">
+
+            <label for="hora">Horário</label>
+
+            <input
+              type="time"
+              id="hora"
+              name="hora"
+              [(ngModel)]="hora"
+            >
+
+          </div>
+
+        </div>
+
+
+        @if (mensagemErro) {
+          <p class="erro">{{ mensagemErro }}</p>
+        }
+
+
+        <button type="submit" class="botao">
+          Agendar Quadra
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <!-- LISTAGEM -->
+
+    <section class="lista">
+
+      <div class="lista-header">
+
+        <h2>Agendamentos cadastrados</h2>
+
+        <span>
+          Total: {{ agendamentos.length }}
+        </span>
+
+      </div>
+
+
+      @if (agendamentos.length === 0) {
+
+        <div class="vazio">
+          <p>Nenhum agendamento cadastrado.</p>
+        </div>
+
+      } @else {
+
+        <div class="tabela-container">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>Cliente</th>
+                <th>Quadra</th>
+                <th>Data</th>
+                <th>Horário</th>
+                <th>Ações</th>
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              @for (
+                agendamento of agendamentos;
+                track agendamento.id
+              ) {
+
+                <tr>
+
+                  <td>{{ agendamento.cliente }}</td>
+
+                  <td>{{ agendamento.quadra }}</td>
+
+                  <td>{{ agendamento.data }}</td>
+
+                  <td>{{ agendamento.hora }}</td>
+
+                  <td>
+
+                    <button
+                      class="excluir"
+                      (click)="excluirAgendamento(agendamento.id)"
+                    >
+                      Excluir
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+    </section>
+
+  </main>
+
+</div>
