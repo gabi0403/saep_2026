@@ -1,23 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-
-
-interface Cliente {
-  id: number;
-  nome: string;
-  telefone: string;
-  email: string;
-}
+import { ClientesService, Cliente } from '../../services/clientes';
 
 @Component({
   selector: 'app-clientes',
-  standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule],
   templateUrl: './clientes.html',
   styleUrl: './clientes.css'
 })
-export class Clientes {
+export class Clientes implements OnInit {
 
   clientes: Cliente[] = [];
 
@@ -25,88 +16,135 @@ export class Clientes {
   telefone = '';
   email = '';
 
-  editando = false;
-  idEditando: number | null = null;
-
+  mensagem = '';
   mensagemErro = '';
 
-  adicionarCliente() {
+  clienteEditando: Cliente | null = null;
 
-    if (
-      this.nome.trim() === '' ||
-      this.telefone.trim() === '' ||
-      this.email.trim() === ''
-    ) {
+  constructor(private clientesService: ClientesService) {}
+
+  ngOnInit(): void {
+    this.carregarClientes();
+  }
+
+  carregarClientes(): void {
+
+    this.clientesService.listar().subscribe({
+
+      next: (clientes) => {
+        this.clientes = clientes;
+      },
+
+      error: (erro) => {
+        console.error(erro);
+        this.mensagemErro = 'Erro ao carregar clientes.';
+      }
+
+    });
+
+  }
+
+  salvar(): void {
+
+    this.mensagem = '';
+    this.mensagemErro = '';
+
+    if (!this.nome || !this.telefone || !this.email) {
       this.mensagemErro = 'Preencha todos os campos.';
       return;
     }
 
-    if (this.editando && this.idEditando !== null) {
+    const cliente = {
+      nome: this.nome,
+      telefone: this.telefone,
+      email: this.email
+    };
 
-      const cliente = this.clientes.find(
-        c => c.id === this.idEditando
-      );
+    if (this.clienteEditando) {
 
-      if (cliente) {
-        cliente.nome = this.nome;
-        cliente.telefone = this.telefone;
-        cliente.email = this.email;
-      }
+      this.clientesService
+        .atualizar(this.clienteEditando.id, cliente)
+        .subscribe({
 
-      this.cancelarEdicao();
+          next: () => {
+            this.mensagem = 'Cliente atualizado com sucesso.';
+            this.limparFormulario();
+            this.carregarClientes();
+          },
+
+          error: (erro) => {
+            console.error(erro);
+
+            this.mensagemErro =
+              erro.error?.mensagem || 'Erro ao atualizar cliente.';
+          }
+
+        });
 
     } else {
 
-      const novoCliente: Cliente = {
-        id: Date.now(),
-        nome: this.nome,
-        telefone: this.telefone,
-        email: this.email
-      };
+      this.clientesService.cadastrar(cliente).subscribe({
 
-      this.clientes.push(novoCliente);
+        next: () => {
+          this.mensagem = 'Cliente cadastrado com sucesso.';
+          this.limparFormulario();
+          this.carregarClientes();
+        },
 
-      this.limparFormulario();
+        error: (erro) => {
+          console.error(erro);
+
+          this.mensagemErro =
+            erro.error?.mensagem || 'Erro ao cadastrar cliente.';
+        }
+
+      });
+
     }
 
-    this.mensagemErro = '';
   }
 
-  editarCliente(cliente: Cliente) {
+  editar(cliente: Cliente): void {
+
+    this.clienteEditando = cliente;
 
     this.nome = cliente.nome;
     this.telefone = cliente.telefone;
     this.email = cliente.email;
 
-    this.editando = true;
-    this.idEditando = cliente.id;
-
-    this.mensagemErro = '';
   }
 
-  excluirCliente(id: number) {
+  excluir(id: number): void {
 
-    this.clientes = this.clientes.filter(
-      cliente => cliente.id !== id
-    );
-
-    if (this.idEditando === id) {
-      this.cancelarEdicao();
+    if (!confirm('Deseja realmente excluir este cliente?')) {
+      return;
     }
+
+    this.clientesService.excluir(id).subscribe({
+
+      next: () => {
+        this.mensagem = 'Cliente excluído com sucesso.';
+        this.carregarClientes();
+      },
+
+      error: (erro) => {
+        console.error(erro);
+
+        this.mensagemErro =
+          erro.error?.mensagem || 'Erro ao excluir cliente.';
+      }
+
+    });
+
   }
 
-  cancelarEdicao() {
-
-    this.editando = false;
-    this.idEditando = null;
-
-    this.limparFormulario();
-  }
-
-  limparFormulario() {
+  limparFormulario(): void {
 
     this.nome = '';
     this.telefone = '';
     this.email = '';
+    this.clienteEditando = null;
+
   }
+
 }

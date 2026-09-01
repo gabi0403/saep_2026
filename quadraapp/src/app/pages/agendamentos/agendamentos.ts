@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { QuadrasService, Quadra } from '../../services/quadras';
+import { ClientesService, Cliente } from '../../services/clientes';
+import {
+  AgendamentosService,
+  Agendamento
+} from '../../services/agendamentos';
 
-interface Agendamento {
-  id: number;
-  cliente: string;
-  quadra: string;
-  data: string;
-  hora: string;
-}
 
 @Component({
   selector: 'app-agendamentos',
@@ -17,63 +16,167 @@ interface Agendamento {
   templateUrl: './agendamentos.html',
   styleUrl: './agendamentos.css'
 })
-export class Agendamentos {
+export class Agendamentos implements OnInit {
 
   agendamentos: Agendamento[] = [];
 
-  cliente = '';
-  quadra = '';
+  clienteId: number | null = null;
+  quadraId: number | null = null;
   data = '';
   hora = '';
 
   mensagemErro = '';
 
-  quadras = [
-    'Tênis',
-    'Beach Tennis',
-    'Futebol Society',
-    'Vôlei de Praia',
-    'Basquete'
-  ];
+  quadras: Quadra[] = [];
+  clientes: Cliente[] = [];
 
-  adicionarAgendamento() {
+  constructor(
+  private quadrasService: QuadrasService,
+  private clientesService: ClientesService,
+  private agendamentosService: AgendamentosService
+) {}
 
-    if (
-      this.cliente.trim() === '' ||
-      this.quadra === '' ||
-      this.data === '' ||
-      this.hora === ''
-    ) {
-      this.mensagemErro = 'Preencha todos os campos.';
-      return;
+  ngOnInit(): void {
+  this.carregarQuadras();
+  this.carregarClientes();
+  this.carregarAgendamentos();
+}
+
+  carregarAgendamentos(): void {
+
+    this.agendamentosService.listar().subscribe({
+
+      next: (agendamentos) => {
+        this.agendamentos = agendamentos;
+      },
+
+      error: (erro) => {
+        console.error('Erro ao carregar agendamentos:', erro);
+        this.mensagemErro = 'Erro ao carregar agendamentos.';
+      }
+
+    });
+
+  }
+
+  carregarQuadras(): void {
+
+    this.quadrasService.listar().subscribe({
+
+      next: (quadras) => {
+        this.quadras = quadras;
+      },
+
+      error: (erro) => {
+        console.error('Erro ao carregar quadras:', erro);
+      }
+
+    });
+
+  }
+
+  carregarClientes(): void {
+
+  this.clientesService.listar().subscribe({
+
+    next: (clientes) => {
+      this.clientes = clientes;
+    },
+
+    error: (erro) => {
+      console.error('Erro ao carregar clientes:', erro);
     }
 
-    const novoAgendamento: Agendamento = {
-      id: Date.now(),
-      cliente: this.cliente,
-      quadra: this.quadra,
-      data: this.data,
-      hora: this.hora
-    };
+  });
 
-    this.agendamentos.push(novoAgendamento);
+}
 
-    this.limparFormulario();
-    this.mensagemErro = '';
+  adicionarAgendamento(): void {
+
+  this.mensagemErro = '';
+
+  if (
+    this.clienteId === null ||
+    this.quadraId === null ||
+    this.data === '' ||
+    this.hora === ''
+  ) {
+
+    this.mensagemErro = 'Preencha todos os campos.';
+    return;
+
   }
 
-  excluirAgendamento(id: number) {
+  const novoAgendamento = {
+    cliente_id: this.clienteId,
+    quadra_id: this.quadraId,
+    data: this.data,
+    hora: this.hora
+  };
 
-    this.agendamentos = this.agendamentos.filter(
-      agendamento => agendamento.id !== id
-    );
-  }
+  this.agendamentosService
+    .cadastrar(novoAgendamento)
+    .subscribe({
+
+      next: () => {
+
+        this.limparFormulario();
+        this.carregarAgendamentos();
+
+      },
+
+      error: (erro) => {
+
+        console.error(erro);
+
+        if (erro.status === 409) {
+
+          this.mensagemErro =
+            'Esta quadra já está agendada para esta data e horário.';
+
+        } else {
+
+          this.mensagemErro =
+            erro.error?.mensagem ||
+            'Erro ao criar agendamento.';
+
+        }
+
+      }
+
+    });
+
+}
+
+  excluirAgendamento(id: number): void {
+
+  this.agendamentosService.excluir(id).subscribe({
+
+    next: () => {
+      this.carregarAgendamentos();
+    },
+
+    error: (erro) => {
+
+      console.error(erro);
+
+      this.mensagemErro =
+        erro.error?.mensagem ||
+        'Erro ao excluir agendamento.';
+
+    }
+
+  });
+
+}
 
   limparFormulario() {
 
-    this.cliente = '';
-    this.quadra = '';
+    this.clienteId = null;
+    this.quadraId = null;
     this.data = '';
     this.hora = '';
+
   }
+
 }

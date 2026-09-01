@@ -38,17 +38,29 @@
 
           <div class="campo">
 
-            <label for="cliente">Cliente</label>
+          <label for="cliente">Cliente</label>
 
-            <input
-              type="text"
-              id="cliente"
-              name="cliente"
-              [(ngModel)]="cliente"
-              placeholder="Nome do cliente"
-            >
+          <select
+            id="cliente"
+            name="cliente"
+            [(ngModel)]="clienteId"
+          >
 
-          </div>
+            <option [ngValue]="null">
+              Selecione um cliente
+            </option>
+
+            @for (c of clientes; track c.id) {
+
+              <option [ngValue]="c.id">
+                {{ c.nome }}
+              </option>
+
+            }
+
+          </select>
+
+        </div>
 
 
           <div class="campo">
@@ -58,15 +70,17 @@
             <select
               id="quadra"
               name="quadra"
-              [(ngModel)]="quadra"
+              [(ngModel)]="quadraId"
             >
 
               <option value="">Selecione uma quadra</option>
 
-              @for (q of quadras; track q) {
-                <option [value]="q">
-                  {{ q }}
+              @for (q of quadras; track q.id) {
+
+                <option [ngValue]="q.id">
+                  {{ q.nome }} — {{ q.tipo }}
                 </option>
+
               }
 
             </select>
@@ -167,9 +181,10 @@
 
                 <tr>
 
-                  <td>{{ agendamento.cliente }}</td>
+                  <td>{{ agendamento.cliente_nome }}</td>
 
-                  <td>{{ agendamento.quadra }}</td>
+                  <td>{{ agendamento.quadra_nome }} 
+                    — {{ agendamento.quadra_tipo }}</td>
 
                   <td>{{ agendamento.data }}</td>
 

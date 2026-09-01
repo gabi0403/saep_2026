@@ -1,197 +1,99 @@
-<div class="clientes-page">
+<div class="clientes-container">
 
-  <header class="topbar">
+  <h1>Clientes</h1>
 
-    <h1>QuadraApp</h1>
+  <form (ngSubmit)="salvar()">
 
-    <nav>
-      <a routerLink="/dashboard">Dashboard</a>
-      <a routerLink="/clientes">Clientes</a>
-      <a routerLink="/agendamentos">Agendamentos</a>
-      <a routerLink="/login">Sair</a>
-    </nav>
+    <div>
+      <label for="nome">Nome</label>
 
-  </header>
-
-
-  <main class="conteudo">
-
-    <div class="cabecalho">
-      <div>
-        <h2>Clientes</h2>
-        <p>Gerenciamento de clientes</p>
-      </div>
+      <input
+        id="nome"
+        type="text"
+        name="nome"
+        [(ngModel)]="nome"
+        placeholder="Nome do cliente"
+      >
     </div>
 
+    <div>
+      <label for="telefone">Telefone</label>
 
-    <!-- FORMULÁRIO -->
+      <input
+        id="telefone"
+        type="text"
+        name="telefone"
+        [(ngModel)]="telefone"
+        placeholder="Telefone"
+      >
+    </div>
 
-    <section class="formulario">
+    <div>
+      <label for="email">E-mail</label>
 
-      <h2>{{ editando ? 'Editar Cliente' : 'Novo Cliente' }}</h2>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="E-mail"
+      >
+    </div>
 
-      <form (ngSubmit)="adicionarCliente()">
+    @if (mensagemErro) {
+      <p class="erro">{{ mensagemErro }}</p>
+    }
 
-        <div class="campos">
+    @if (mensagem) {
+      <p class="sucesso">{{ mensagem }}</p>
+    }
 
-          <div class="campo">
+    <button type="submit">
+      {{ clienteEditando ? 'Atualizar' : 'Cadastrar' }}
+    </button>
 
-            <label for="nome">Nome</label>
+    @if (clienteEditando) {
+      <button type="button" (click)="limparFormulario()">
+        Cancelar
+      </button>
+    }
 
-            <input
-              type="text"
-              id="nome"
-              name="nome"
-              [(ngModel)]="nome"
-              placeholder="Nome completo"
-            >
-
-          </div>
-
-
-          <div class="campo">
-
-            <label for="telefone">Telefone</label>
-
-            <input
-              type="text"
-              id="telefone"
-              name="telefone"
-              [(ngModel)]="telefone"
-              placeholder="Telefone"
-            >
-
-          </div>
-
-
-          <div class="campo">
-
-            <label for="email">E-mail</label>
-
-            <input
-              type="email"
-              id="email"
-              name="email"
-              [(ngModel)]="email"
-              placeholder="E-mail"
-            >
-
-          </div>
-
-        </div>
+  </form>
 
 
-        @if (mensagemErro) {
-          <p class="erro">{{ mensagemErro }}</p>
-        }
+  <hr>
 
 
-        <div class="acoes-formulario">
+  <h2>Clientes cadastrados</h2>
 
-          <button type="submit" class="botao principal">
-            {{ editando ? 'Salvar Alterações' : 'Cadastrar Cliente' }}
-          </button>
+  @if (clientes.length === 0) {
 
-          @if (editando) {
-            <button
-              type="button"
-              class="botao cancelar"
-              (click)="cancelarEdicao()"
-            >
-              Cancelar
-            </button>
-          }
+    <p>Nenhum cliente cadastrado.</p>
 
-        </div>
+  } @else {
 
-      </form>
+    @for (cliente of clientes; track cliente.id) {
 
-    </section>
+      <div class="cliente">
 
+        <strong>{{ cliente.nome }}</strong>
 
-    <!-- LISTA -->
+        <p>Telefone: {{ cliente.telefone }}</p>
 
-    <section class="lista">
+        <p>E-mail: {{ cliente.email }}</p>
 
-      <div class="lista-header">
+        <button type="button" (click)="editar(cliente)">
+          Editar
+        </button>
 
-        <h2>Clientes cadastrados</h2>
-
-        <span>
-          Total: {{ clientes.length }}
-        </span>
+        <button type="button" (click)="excluir(cliente.id)">
+          Excluir
+        </button>
 
       </div>
 
+    }
 
-      @if (clientes.length === 0) {
-
-        <div class="vazio">
-          <p>Nenhum cliente cadastrado.</p>
-        </div>
-
-      } @else {
-
-        <div class="tabela-container">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Nome</th>
-                <th>Telefone</th>
-                <th>E-mail</th>
-                <th>Ações</th>
-              </tr>
-
-            </thead>
-
-
-            <tbody>
-
-              @for (cliente of clientes; track cliente.id) {
-
-                <tr>
-
-                  <td>{{ cliente.nome }}</td>
-
-                  <td>{{ cliente.telefone }}</td>
-
-                  <td>{{ cliente.email }}</td>
-
-                  <td class="acoes">
-
-                    <button
-                      class="editar"
-                      (click)="editarCliente(cliente)"
-                    >
-                      Editar
-                    </button>
-
-                    <button
-                      class="excluir"
-                      (click)="excluirCliente(cliente.id)"
-                    >
-                      Excluir
-                    </button>
-
-                  </td>
-
-                </tr>
-
-              }
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      }
-
-    </section>
-
-  </main>
+  }
 
 </div>
