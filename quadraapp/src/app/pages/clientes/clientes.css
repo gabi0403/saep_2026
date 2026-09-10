@@ -1,6 +1,6 @@
 .clientes-page {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background: #f4f7f8;
 }
 
 .topbar {
@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #1976d2;
+  background-color: #123b3a;
   color: white;
 }
 
@@ -29,8 +29,18 @@
 }
 
 .topbar nav a:hover {
-  text-decoration: underline;
+  color: #a6ead4;
 }
+
+.link-sair {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.link-sair:hover { color: #a6ead4; }
 
 .conteudo {
   padding: 35px 40px;
@@ -86,7 +96,7 @@
 
 .campo input:focus {
   outline: none;
-  border-color: #1976d2;
+  border-color: #12846c;
 }
 
 .acoes-formulario {
@@ -104,12 +114,12 @@
 }
 
 .principal {
-  background-color: #1976d2;
+  background-color: #12846c;
   color: white;
 }
 
 .principal:hover {
-  background-color: #125ca1;
+  background-color: #0c6654;
 }
 
 .cancelar {
@@ -119,6 +129,11 @@
 
 .erro {
   color: #d32f2f;
+  margin-top: 15px;
+}
+
+.sucesso {
+  color: #087f5b;
   margin-top: 15px;
 }
 
@@ -141,6 +156,25 @@
 
 .lista-header span {
   color: #666;
+}
+
+.busca {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 420px;
+  margin-top: 16px;
+}
+
+.busca label {
+  font-weight: 600;
+  color: #365856;
+}
+
+.busca input {
+  padding: 10px 12px;
+  border: 1px solid #c9d9d5;
+  border-radius: 5px;
 }
 
 .tabela-container {
@@ -197,4 +231,13 @@ th {
   border-radius: 8px;
   color: #666;
   text-align: center;
+}
+
+@media (max-width: 720px) {
+  .topbar { height: auto; padding: 18px 20px; align-items: flex-start; gap: 16px; flex-direction: column; }
+  .topbar nav { gap: 14px; flex-wrap: wrap; }
+  .conteudo { padding: 28px 20px; }
+  .campos { grid-template-columns: 1fr; }
+  .tabela-container { overflow-x: auto; }
+  th, td { white-space: nowrap; }
 }

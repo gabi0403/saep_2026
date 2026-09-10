@@ -10,7 +10,10 @@
       <a routerLink="/dashboard">Dashboard</a>
       <a routerLink="/clientes">Clientes</a>
       <a routerLink="/agendamentos">Agendamentos</a>
-      <a routerLink="/login">Sair</a>
+      @if (usuario) {
+        <span class="usuario-logado">{{ usuario }}</span>
+      }
+      <button type="button" class="link-sair" (click)="sair()">Sair</button>
     </nav>
 
   </header>
@@ -23,7 +26,17 @@
         <h2>Dashboard</h2>
         <p>Visão geral do sistema</p>
       </div>
+      <button type="button" class="atualizar" (click)="carregarDados()" [disabled]="carregando">
+        {{ carregando ? 'Carregando...' : 'Atualizar dados' }}
+      </button>
     </div>
+
+    @if (mensagemErro) {
+      <div class="alerta">
+        <span>{{ mensagemErro }}</span>
+        <button type="button" (click)="carregarDados()">Tentar novamente</button>
+      </div>
+    }
 
 
     <section class="cards">
@@ -51,7 +64,7 @@
       <div class="card">
 
         <div>
-          <p>Agendamentos Hoje</p>
+          <p>Total de Agendamentos</p>
           <h3>{{ totalAgendamentos }}</h3>
         </div>
 
@@ -83,9 +96,34 @@
 
       <h2>Próximos Agendamentos</h2>
 
-      <div class="vazio">
-        <p>Nenhum agendamento cadastrado.</p>
-      </div>
+      @if (agendamentos.length === 0) {
+        <div class="vazio">
+          <p>Nenhum agendamento cadastrado.</p>
+        </div>
+      } @else {
+        <div class="tabela-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Quadra</th>
+                <th>Data</th>
+                <th>Horário</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (agendamento of agendamentos; track agendamento.id) {
+                <tr>
+                  <td>{{ agendamento.cliente_nome }}</td>
+                  <td>{{ agendamento.quadra_nome }}</td>
+                  <td>{{ agendamento.data }}</td>
+                  <td>{{ agendamento.hora }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
 
     </section>
 

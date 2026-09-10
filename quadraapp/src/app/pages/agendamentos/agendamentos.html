@@ -8,7 +8,7 @@
       <a routerLink="/dashboard">Dashboard</a>
       <a routerLink="/clientes">Clientes</a>
       <a routerLink="/agendamentos">Agendamentos</a>
-      <a routerLink="/login">Sair</a>
+      <button type="button" class="link-sair" (click)="sair()">Sair</button>
     </nav>
 
   </header>
@@ -183,7 +183,7 @@
 
                   <td>{{ agendamento.cliente_nome }}</td>
 
-                  <td>{{ agendamento.quadra_nome }} 
+                  <td>{{ agendamento.quadra_nome }}
                     — {{ agendamento.quadra_tipo }}</td>
 
                   <td>{{ agendamento.data }}</td>

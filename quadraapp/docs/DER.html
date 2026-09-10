@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>DER QuadraApp</title>
+<style>
+  body { margin: 0; background: #f4f7f8; font-family: Arial, sans-serif; }
+  svg { display: block; width: 1400px; height: 900px; }
+  .title { font-size: 34px; font-weight: bold; fill: #123b3a; }
+  .entity { fill: white; stroke: #123b3a; stroke-width: 3; }
+  .head { fill: #123b3a; }
+  .head-text { fill: white; font-size: 22px; font-weight: bold; }
+  .field { fill: #243c3b; font-size: 17px; }
+  .relation { stroke: #12846c; stroke-width: 4; fill: none; }
+  .cardinality { fill: #0c6654; font-size: 18px; font-weight: bold; }
+  .legend { fill: #55706e; font-size: 16px; }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900">
+  <text x="700" y="55" text-anchor="middle" class="title">Diagrama Entidade-Relacionamento - QuadraApp</text>
+
+  <path d="M350 325 L570 325" class="relation"/>
+  <path d="M830 325 L1050 325" class="relation"/>
+  <path d="M700 470 L700 620" class="relation"/>
+  <text x="455" y="310" text-anchor="middle" class="cardinality">1:N</text>
+  <text x="945" y="310" text-anchor="middle" class="cardinality">1:N</text>
+  <text x="720" y="560" class="cardinality">1:N</text>
+
+  <g transform="translate(70 150)">
+    <rect width="280" height="175" rx="8" class="entity"/>
+    <rect width="280" height="48" rx="8" class="head"/>
+    <text x="140" y="32" text-anchor="middle" class="head-text">USUARIOS</text>
+    <text x="18" y="78" class="field">🔑 id SERIAL (PK)</text>
+    <text x="18" y="108" class="field">usuario VARCHAR UNIQUE</text>
+    <text x="18" y="138" class="field">senha VARCHAR</text>
+  </g>
+
+  <g transform="translate(570 150)">
+    <rect width="260" height="320" rx="8" class="entity"/>
+    <rect width="260" height="48" rx="8" class="head"/>
+    <text x="130" y="32" text-anchor="middle" class="head-text">AGENDAMENTOS</text>
+    <text x="18" y="78" class="field">🔑 id SERIAL (PK)</text>
+    <text x="18" y="112" class="field">cliente_id INTEGER (FK)</text>
+    <text x="18" y="146" class="field">quadra_id INTEGER (FK)</text>
+    <text x="18" y="180" class="field">data DATE</text>
+    <text x="18" y="214" class="field">hora TIME</text>
+    <text x="18" y="270" class="field">UNIQUE (quadra_id,</text>
+    <text x="18" y="294" class="field">data, hora)</text>
+  </g>
+
+  <g transform="translate(1050 150)">
+    <rect width="280" height="210" rx="8" class="entity"/>
+    <rect width="280" height="48" rx="8" class="head"/>
+    <text x="140" y="32" text-anchor="middle" class="head-text">QUADRAS</text>
+    <text x="18" y="82" class="field">🔑 id SERIAL (PK)</text>
+    <text x="18" y="116" class="field">nome VARCHAR</text>
+    <text x="18" y="150" class="field">tipo VARCHAR</text>
+    <text x="18" y="184" class="field">status VARCHAR</text>
+  </g>
+
+  <g transform="translate(570 620)">
+    <rect width="260" height="210" rx="8" class="entity"/>
+    <rect width="260" height="48" rx="8" class="head"/>
+    <text x="130" y="32" text-anchor="middle" class="head-text">CLIENTES</text>
+    <text x="18" y="82" class="field">🔑 id SERIAL (PK)</text>
+    <text x="18" y="116" class="field">nome VARCHAR</text>
+    <text x="18" y="150" class="field">telefone VARCHAR</text>
+    <text x="18" y="184" class="field">email VARCHAR UNIQUE</text>
+  </g>
+
+  <text x="700" y="875" text-anchor="middle" class="legend">A constraint UNIQUE evita dupla locação da mesma quadra na mesma data e hora.</text>
+</svg>
+</body>
+</html>

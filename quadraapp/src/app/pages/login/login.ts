@@ -33,8 +33,7 @@ export class Login {
     this.authService.login(this.usuario, this.senha).subscribe({
 
       next: (resposta) => {
-
-        console.log(resposta);
+        this.authService.salvarSessao(resposta);
 
         this.router.navigate(['/dashboard']);
 

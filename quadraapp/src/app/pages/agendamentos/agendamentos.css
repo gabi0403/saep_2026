@@ -1,6 +1,6 @@
 .agendamentos-page {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background: #f4f7f8;
 }
 
 .topbar {
@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #1976d2;
+  background-color: #123b3a;
   color: white;
 }
 
@@ -29,8 +29,18 @@
 }
 
 .topbar nav a:hover {
-  text-decoration: underline;
+  color: #a6ead4;
 }
+
+.link-sair {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.link-sair:hover { color: #a6ead4; }
 
 .conteudo {
   padding: 35px 40px;
@@ -89,7 +99,7 @@
 .campo input:focus,
 .campo select:focus {
   outline: none;
-  border-color: #1976d2;
+  border-color: #12846c;
 }
 
 .botao {
@@ -97,14 +107,14 @@
   padding: 10px 18px;
   border: none;
   border-radius: 5px;
-  background-color: #1976d2;
+  background-color: #12846c;
   color: white;
   font-size: 15px;
   cursor: pointer;
 }
 
 .botao:hover {
-  background-color: #125ca1;
+  background-color: #0c6654;
 }
 
 .erro {
@@ -177,4 +187,13 @@ th {
   border-radius: 8px;
   color: #666;
   text-align: center;
+}
+
+@media (max-width: 720px) {
+  .topbar { height: auto; padding: 18px 20px; align-items: flex-start; gap: 16px; flex-direction: column; }
+  .topbar nav { gap: 14px; flex-wrap: wrap; }
+  .conteudo { padding: 28px 20px; }
+  .campos { grid-template-columns: 1fr; }
+  .tabela-container { overflow-x: auto; }
+  th, td { white-space: nowrap; }
 }
