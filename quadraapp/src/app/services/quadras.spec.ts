@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { Quadras } from './quadras';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { QuadrasService } from './quadras';
 
-describe('Quadras', () => {
-  let service: Quadras;
+describe('QuadrasService', () => {
+  let service: QuadrasService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Quadras);
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient(), provideHttpClientTesting()]
+    });
+    service = TestBed.inject(QuadrasService);
   });
 
   it('should be created', () => {

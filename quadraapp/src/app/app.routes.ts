@@ -4,6 +4,7 @@ import { Login } from './pages/login/login';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Clientes } from './pages/clientes/clientes';
 import { Agendamentos } from './pages/agendamentos/agendamentos';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -17,14 +18,17 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: Dashboard
+    component: Dashboard,
+    canActivate: [authGuard]
   },
   {
     path: 'clientes',
-    component: Clientes
+    component: Clientes,
+    canActivate: [authGuard]
   },
   {
     path: 'agendamentos',
-    component: Agendamentos
+    component: Agendamentos,
+    canActivate: [authGuard]
   }
 ];

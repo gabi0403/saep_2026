@@ -1,5 +1,14 @@
 # Quadraapp
 
+## Entregas da atividade
+
+- Requisitos funcionais: [docs/REQUISITOS_FUNCIONAIS.md](docs/REQUISITOS_FUNCIONAIS.md)
+- Diagrama entidade-relacionamento: [docs/DER.png](docs/DER.png)
+- Fonte do DER: [docs/DER.mmd](docs/DER.mmd)
+- Script de criação e população: [database/saep_agendamento_db.sql](database/saep_agendamento_db.sql)
+- Casos de teste: [docs/CASOS_DE_TESTE.md](docs/CASOS_DE_TESTE.md)
+- Requisitos de infraestrutura: [docs/REQUISITOS_INFRAESTRUTURA.md](docs/REQUISITOS_INFRAESTRUTURA.md)
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.3.
 
 ## Development server

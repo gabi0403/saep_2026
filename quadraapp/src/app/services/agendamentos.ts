@@ -37,6 +37,15 @@ export class AgendamentosService {
 
   }
 
+  atualizar(id: number, agendamento: {
+    cliente_id: number;
+    quadra_id: number;
+    data: string;
+    hora: string;
+  }): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, agendamento);
+  }
+
   excluir(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }

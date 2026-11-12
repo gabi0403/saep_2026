@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { QuadrasService, Quadra } from '../../services/quadras';
 import { ClientesService, Cliente } from '../../services/clientes';
 import {
   AgendamentosService,
   Agendamento
 } from '../../services/agendamentos';
+import { AuthService } from '../../services/auth';
 
 
 @Component({
@@ -33,8 +34,15 @@ export class Agendamentos implements OnInit {
   constructor(
   private quadrasService: QuadrasService,
   private clientesService: ClientesService,
-  private agendamentosService: AgendamentosService
+  private agendamentosService: AgendamentosService,
+  private authService: AuthService,
+  private router: Router
 ) {}
+
+  sair(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 
   ngOnInit(): void {
   this.carregarQuadras();

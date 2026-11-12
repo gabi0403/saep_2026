@@ -1,6 +1,16 @@
 .dashboard {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background: #f4f7f8;
+}
+
+@media (max-width: 720px) {
+  .topbar { height: auto; padding: 18px 20px; align-items: flex-start; gap: 16px; flex-direction: column; }
+  .topbar nav { gap: 14px; flex-wrap: wrap; }
+  .conteudo { padding: 28px 20px; }
+  .cards { grid-template-columns: 1fr; }
+  .botoes { flex-direction: column; }
+  .tabela-container { overflow-x: auto; }
+  th, td { white-space: nowrap; }
 }
 
 .topbar {
@@ -9,7 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #1976d2;
+  background-color: #123b3a;
   color: white;
 }
 
@@ -30,7 +40,24 @@
 }
 
 .topbar nav a:hover {
-  text-decoration: underline;
+  color: #a6ead4;
+}
+
+.usuario-logado {
+  color: #a6ead4;
+  font-weight: 600;
+}
+
+.link-sair {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.link-sair:hover {
+  color: #a6ead4;
 }
 
 .conteudo {
@@ -45,6 +72,40 @@
 .cabecalho p {
   color: #666;
   margin-top: 5px;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.atualizar,
+.alerta button {
+  border: 0;
+  border-radius: 5px;
+  padding: 10px 14px;
+  background: #12846c;
+  color: white;
+  cursor: pointer;
+}
+
+.atualizar:disabled {
+  opacity: .65;
+  cursor: wait;
+}
+
+.alerta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  padding: 14px 16px;
+  border-left: 4px solid #d97706;
+  background: #fff7ed;
+  color: #92400e;
 }
 
 .cards {
@@ -108,3 +169,15 @@
   border-radius: 8px;
   color: #666;
 }
+
+.tabela-container {
+  margin-top: 15px;
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(18, 59, 58, 0.08);
+}
+
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid #e8eeee; }
+th { color: #55706e; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }

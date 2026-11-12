@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { ClientesService, Cliente } from '../../services/clientes';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-clientes',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './clientes.html',
   styleUrl: './clientes.css'
 })
@@ -15,13 +17,23 @@ export class Clientes implements OnInit {
   nome = '';
   telefone = '';
   email = '';
+  busca = '';
 
   mensagem = '';
   mensagemErro = '';
 
   clienteEditando: Cliente | null = null;
 
-  constructor(private clientesService: ClientesService) {}
+  constructor(
+    private clientesService: ClientesService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  sair(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 
   ngOnInit(): void {
     this.carregarClientes();
@@ -145,6 +157,19 @@ export class Clientes implements OnInit {
     this.email = '';
     this.clienteEditando = null;
 
+  }
+
+  get clientesFiltrados(): Cliente[] {
+    const termo = this.busca.trim().toLocaleLowerCase();
+
+    if (!termo) {
+      return this.clientes;
+    }
+
+    return this.clientes.filter((cliente) =>
+      cliente.nome.toLocaleLowerCase().includes(termo) ||
+      cliente.email.toLocaleLowerCase().includes(termo)
+    );
   }
 
 }

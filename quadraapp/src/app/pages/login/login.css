@@ -3,25 +3,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f2f2f2;
+  background: linear-gradient(135deg, #e5f3ee 0%, #f4f7f8 55%, #fff5e8 100%);
 }
 
 .login-card {
   width: 350px;
   padding: 35px;
   background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  border: 1px solid #d9e8e3;
+  box-shadow: 0 18px 45px rgba(18, 59, 58, 0.12);
 }
 
 .login-card h1 {
   text-align: center;
   margin-bottom: 5px;
+  color: #123b3a;
 }
 
 .subtitle {
   text-align: center;
-  color: #666;
+  color: #55706e;
   margin-bottom: 30px;
 }
 
@@ -45,7 +47,7 @@
 
 .campo input:focus {
   outline: none;
-  border-color: #1976d2;
+  border-color: #12846c;
 }
 
 button {
@@ -53,14 +55,14 @@ button {
   padding: 11px;
   border: none;
   border-radius: 5px;
-  background-color: #8e19d2;
+  background-color: #12846c;
   color: white;
   font-size: 16px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #125ca1;
+  background-color: #0c6654;
 }
 
 .erro {

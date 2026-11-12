@@ -1,12 +1,28 @@
-<div class="clientes-container">
+<div class="clientes-page">
 
-  <h1>Clientes</h1>
+  <header class="topbar">
+    <h1>QuadraApp</h1>
+    <nav>
+      <a routerLink="/dashboard">Dashboard</a>
+      <a routerLink="/clientes" aria-current="page">Clientes</a>
+      <a routerLink="/agendamentos">Agendamentos</a>
+      <button type="button" class="link-sair" (click)="sair()">Sair</button>
+    </nav>
+  </header>
 
-  <form (ngSubmit)="salvar()">
+  <main class="conteudo">
+    <div class="cabecalho">
+      <h2>Clientes</h2>
+      <p>Cadastre e gerencie os clientes da quadra.</p>
+    </div>
 
-    <div>
+    <section class="formulario">
+      <h2>{{ clienteEditando ? 'Editar cliente' : 'Novo cliente' }}</h2>
+
+      <form (ngSubmit)="salvar()">
+        <div class="campos">
+          <div class="campo">
       <label for="nome">Nome</label>
-
       <input
         id="nome"
         type="text"
@@ -14,11 +30,10 @@
         [(ngModel)]="nome"
         placeholder="Nome do cliente"
       >
-    </div>
+          </div>
 
-    <div>
+          <div class="campo">
       <label for="telefone">Telefone</label>
-
       <input
         id="telefone"
         type="text"
@@ -26,11 +41,10 @@
         [(ngModel)]="telefone"
         placeholder="Telefone"
       >
-    </div>
+          </div>
 
-    <div>
+          <div class="campo">
       <label for="email">E-mail</label>
-
       <input
         id="email"
         type="email"
@@ -38,62 +52,79 @@
         [(ngModel)]="email"
         placeholder="E-mail"
       >
-    </div>
+          </div>
+        </div>
 
-    @if (mensagemErro) {
-      <p class="erro">{{ mensagemErro }}</p>
-    }
+        @if (mensagemErro) {
+          <p class="erro">{{ mensagemErro }}</p>
+        }
 
-    @if (mensagem) {
-      <p class="sucesso">{{ mensagem }}</p>
-    }
+        @if (mensagem) {
+          <p class="sucesso">{{ mensagem }}</p>
+        }
 
-    <button type="submit">
-      {{ clienteEditando ? 'Atualizar' : 'Cadastrar' }}
-    </button>
+        <div class="acoes-formulario">
+          <button type="submit" class="botao principal">
+            {{ clienteEditando ? 'Atualizar cliente' : 'Cadastrar cliente' }}
+          </button>
 
-    @if (clienteEditando) {
-      <button type="button" (click)="limparFormulario()">
-        Cancelar
-      </button>
-    }
+          @if (clienteEditando) {
+            <button type="button" class="botao cancelar" (click)="limparFormulario()">
+              Cancelar
+            </button>
+          }
+        </div>
+      </form>
+    </section>
 
-  </form>
-
-
-  <hr>
-
-
-  <h2>Clientes cadastrados</h2>
-
-  @if (clientes.length === 0) {
-
-    <p>Nenhum cliente cadastrado.</p>
-
-  } @else {
-
-    @for (cliente of clientes; track cliente.id) {
-
-      <div class="cliente">
-
-        <strong>{{ cliente.nome }}</strong>
-
-        <p>Telefone: {{ cliente.telefone }}</p>
-
-        <p>E-mail: {{ cliente.email }}</p>
-
-        <button type="button" (click)="editar(cliente)">
-          Editar
-        </button>
-
-        <button type="button" (click)="excluir(cliente.id)">
-          Excluir
-        </button>
-
+    <section class="lista">
+      <div class="lista-header">
+        <h2>Clientes cadastrados</h2>
+        <span>{{ clientesFiltrados.length }} de {{ clientes.length }} cliente(s)</span>
       </div>
 
-    }
+      <div class="busca">
+        <label for="buscaCliente">Buscar por nome ou e-mail</label>
+        <input
+          id="buscaCliente"
+          type="search"
+          name="buscaCliente"
+          [(ngModel)]="busca"
+          placeholder="Digite para filtrar..."
+        >
+      </div>
 
-  }
-
+      @if (clientesFiltrados.length === 0) {
+        <div class="vazio">
+          <p>{{ clientes.length === 0 ? 'Nenhum cliente cadastrado.' : 'Nenhum cliente encontrado.' }}</p>
+        </div>
+      } @else {
+        <div class="tabela-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>E-mail</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (cliente of clientesFiltrados; track cliente.id) {
+                <tr>
+                  <td><strong>{{ cliente.nome }}</strong></td>
+                  <td>{{ cliente.telefone }}</td>
+                  <td>{{ cliente.email }}</td>
+                  <td class="acoes">
+                    <button type="button" class="editar" (click)="editar(cliente)">Editar</button>
+                    <button type="button" class="excluir" (click)="excluir(cliente.id)">Excluir</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </section>
+  </main>
 </div>

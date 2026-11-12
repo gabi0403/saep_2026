@@ -28,4 +28,17 @@ export class AuthService {
       }
     );
   }
+
+  salvarSessao(resposta: LoginResponse): void {
+    localStorage.setItem('quadraapp_usuario', JSON.stringify(resposta.usuario));
+  }
+
+  usuarioAtual(): LoginResponse['usuario'] | null {
+    const usuario = localStorage.getItem('quadraapp_usuario');
+    return usuario ? JSON.parse(usuario) : null;
+  }
+
+  logout(): void {
+    localStorage.removeItem('quadraapp_usuario');
+  }
 }

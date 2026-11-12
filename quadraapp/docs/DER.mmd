@@ -1,0 +1,31 @@
+erDiagram
+    USUARIOS {
+        SERIAL id PK
+        VARCHAR usuario UK
+        VARCHAR senha
+    }
+
+    CLIENTES {
+        SERIAL id PK
+        VARCHAR nome
+        VARCHAR telefone
+        VARCHAR email UK
+    }
+
+    QUADRAS {
+        SERIAL id PK
+        VARCHAR nome
+        VARCHAR tipo
+        VARCHAR status
+    }
+
+    AGENDAMENTOS {
+        SERIAL id PK
+        INTEGER cliente_id FK
+        INTEGER quadra_id FK
+        DATE data
+        TIME hora
+    }
+
+    CLIENTES ||--o{ AGENDAMENTOS : realiza
+    QUADRAS ||--o{ AGENDAMENTOS : recebe

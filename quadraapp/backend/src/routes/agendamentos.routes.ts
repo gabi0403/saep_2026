@@ -98,6 +98,65 @@ router.post('/agendamentos', async (req, res) => {
 });
 
 
+// ATUALIZAR AGENDAMENTO
+router.put('/agendamentos/:id', async (req, res) => {
+
+  try {
+
+    const id = Number(req.params.id);
+    const { cliente_id, quadra_id, data, hora } = req.body;
+
+    if (!cliente_id || !quadra_id || !data || !hora) {
+      return res.status(400).json({
+        mensagem: 'Cliente, quadra, data e hora são obrigatórios.'
+      });
+    }
+
+    const resultado = await pool.query(`
+      UPDATE agendamentos
+      SET cliente_id = $1,
+          quadra_id = $2,
+          data = $3,
+          hora = $4
+      WHERE id = $5
+      RETURNING id, cliente_id, quadra_id, data, hora
+    `, [cliente_id, quadra_id, data, hora, id]);
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({
+        mensagem: 'Agendamento não encontrado.'
+      });
+    }
+
+    return res.status(200).json({
+      mensagem: 'Agendamento atualizado com sucesso.',
+      agendamento: resultado.rows[0]
+    });
+
+  } catch (erro: any) {
+
+    console.error(erro);
+
+    if (erro.code === '23503') {
+      return res.status(400).json({
+        mensagem: 'Cliente ou quadra não encontrada.'
+      });
+    }
+
+    if (erro.code === '23505') {
+      return res.status(409).json({
+        mensagem: 'Esta quadra já está agendada para esta data e horário.'
+      });
+    }
+
+    return res.status(500).json({
+      mensagem: 'Erro ao atualizar agendamento.'
+    });
+  }
+
+});
+
+
 // EXCLUIR AGENDAMENTO
 router.delete('/agendamentos/:id', async (req, res) => {
 
